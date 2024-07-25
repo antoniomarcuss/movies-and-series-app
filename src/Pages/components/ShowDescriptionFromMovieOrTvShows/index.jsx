@@ -30,7 +30,7 @@ const ShowDescriptionFromMovieOrTvShows = ({
       {!isLoading && !isError && (
         <>
           <Link
-            to={`${backLink}`}
+            to={backLink}
             className="absolute bg-black py-8 bg-opacity-40 w-full"
           >
             <IoCaretBackSharp className="absolute text-2xl top-5 left-5 text-white" />

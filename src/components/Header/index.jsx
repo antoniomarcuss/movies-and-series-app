@@ -1,11 +1,14 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa";
-import useFetchGenres from "../../hooks/useFetchGenres";
+import useFetchMoviesGenres from "../../hooks/useFetchMoviesGenres";
+import useFetchTvShowsGenres from "../../hooks/useFetchTvShowsGenres";
 
 const Header = () => {
-  const { genres } = useFetchGenres();
+  const { genres } = useFetchMoviesGenres();
+  const { genresTvShows } = useFetchTvShowsGenres();
+  const location = useLocation();
 
   const ActivePage = [
     {
@@ -18,8 +21,32 @@ const Header = () => {
     },
   ];
 
+  const renderGenres = () => {
+    if (location.pathname === "/" && genres) {
+      return genres.map((genre) => (
+        <li key={genre.id}>
+          <Link to={`genre/${genre.name}/${genre.id}`} className="text-lg">
+            {genre.name}
+          </Link>
+        </li>
+      ));
+    } else if (location.pathname === "/tvShows" && genresTvShows) {
+      return genresTvShows.map((genre) => (
+        <li key={genre.id}>
+          <Link
+            to={`/tvShows/genre/${genre.name}/${genre.id}`}
+            className="text-lg"
+          >
+            {genre.name}
+          </Link>
+        </li>
+      ));
+    }
+    return null;
+  };
+
   return (
-    <div className="navbar  absolute bg-black bg-opacity-80">
+    <div className="navbar absolute bg-black bg-opacity-80">
       <div className="navbar-start">
         <div className="dropdown">
           <div
@@ -31,30 +58,21 @@ const Header = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-gray-950 rounded-box  mt-3 w-52 p-2 shadow z-50"
+            className="menu menu-sm dropdown-content bg-gray-950 rounded-box mt-3 w-52 p-2 shadow z-50"
           >
-            {genres?.map((genre) => (
-              <li key={genre.id}>
-                <Link
-                  to={`genre/${genre.name}/${genre.id}`}
-                  className="text-lg  "
-                >
-                  {genre.name}
-                </Link>
-              </li>
-            ))}
+            {renderGenres()}
           </ul>
         </div>
       </div>
-      <div className="sm:navbar-start navbar-center flex gap-4  p-2 px-6 text-center">
+      <div className="sm:navbar-start navbar-center flex gap-4 p-2 px-6 text-center">
         {ActivePage.map((active) => (
           <NavLink
             key={active.link}
             to={active.link}
             className={({ isActive }) =>
               isActive
-                ? " border-2 w-[80%] text-white   border-b-blue-600 border-t-0 border-l-0 border-r-0 transition-all duration-300"
-                : " border-b-gray-500 w-[40%] text-white hover:border-b-white border-b-2  transition-all duration-300"
+                ? "border-2 sm:w-[80%] text-white border-b-blue-600 border-t-0 border-l-0 border-r-0 transition-all duration-300"
+                : "border-b-gray-500 sm:w-[40%] text-white hover:border-b-white border-b-2 transition-all duration-300"
             }
           >
             {active.page}
@@ -63,11 +81,11 @@ const Header = () => {
       </div>
       <div className="navbar-end">
         <Link to="searchForMoviesOrSeries">
-          <button className=" btn btn-ghost btn-circle ">
-            <CiSearch className="text-white text-xl  lg:text-2xl " />
+          <button className="btn btn-ghost btn-circle">
+            <CiSearch className="text-white text-xl lg:text-2xl" />
           </button>
         </Link>
-        <button className="btn btn-ghost btn-circle ">
+        <button className="btn btn-ghost btn-circle">
           <FaHeart className="text-red-500 text-lg hover:text-red-600" />
         </button>
       </div>

@@ -8,7 +8,13 @@ import { useEffect, useRef, useState } from "react";
 import Pagination from "../../../components/Pagination";
 import { ApiImg } from "../../../consts";
 
-const ShowCategory = ({ queryKey, queryFn, title, backLink }) => {
+const ShowCategory = ({
+  queryKey,
+  queryFn,
+  title,
+  backLinkHome = "/",
+  backLink,
+}) => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -20,6 +26,7 @@ const ShowCategory = ({ queryKey, queryFn, title, backLink }) => {
     keepPreviousData: true,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
+      console.log(data.data.results);
       setTotalPages(data.data.total_pages);
     },
   });
@@ -59,38 +66,37 @@ const ShowCategory = ({ queryKey, queryFn, title, backLink }) => {
       className="bg-black bg-opacity-50 md:max-w-[1600px]  m-auto "
     >
       <div className="flex items-center gap-2 p-3 sm:p-4 bg-black bg-opacity-10 sm:px-4">
-        <Link to="/">
+        <Link to={backLinkHome}>
           <IoArrowBackOutline className="text-lg" />
         </Link>
-        <h1 className="text-center text-lg sm:text-xl">{title}</h1>
+        <h1 className="text-center text-lg sm:text-xl text-white">{title}</h1>
       </div>
       <Loading isLoading={isLoading} />
       <Error isError={isError} />
       {!isLoading && !isError && (
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 mx-1 mt-4  space-x-1  gap-y-4 justify-items-center">
-          {data?.data.results.map((movie) => (
-            <Link to={`/${backLink}/${movie.id}`} key={movie.id}>
+          {data?.data.results.map((item) => (
+            <Link to={`${backLink}/${item.id}`} key={item.id}>
               <div className="flex flex-col relative  items-center">
                 <div>
                   <img
                     src={` ${
-                      movie.poster_path
-                        ? `${ApiImg}/${movie.poster_path}`
+                      item.poster_path
+                        ? `${ApiImg}/${item.poster_path}`
                         : "./imageNotFound.jpg "
                     }`}
                     className={` w-full h-48  md:h-52 lg:h-60  object-cover rounded-md ${
-                      !movie.poster_path &&
-                      "w-full object-cover lg:object-cover"
+                      !item.poster_path && "w-full object-cover lg:object-cover"
                     }	 rounded-md object-cover  `}
                     alt=""
                   />
                   <h1 className="truncate w-[100px]  mt-2 text-xs sm:w-32 md:w-36 lg:max-w-32  pb-2 racking-wider lg:text-[13px] ">
-                    {movie.title}
+                    {item.title || item.name}
                   </h1>
                 </div>
 
                 <div className="text-yellow-300 absolute text-xs text-bold bg-black rounded-full bg-opacity-40  p-1 left-0  bottom-8 ">
-                  {movie.vote_average.toFixed(1)}
+                  {item.vote_average.toFixed(1)}
                 </div>
               </div>
             </Link>
@@ -115,6 +121,7 @@ ShowCategory.propTypes = {
   queryFn: PropTypes.func.isRequired,
   title: PropTypes.string,
   backLink: PropTypes.string.isRequired,
+  backLinkHome: PropTypes.string,
 };
 
 export default ShowCategory;

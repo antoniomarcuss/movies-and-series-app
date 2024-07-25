@@ -3,6 +3,11 @@ const ApiKey = import.meta.env.VITE_API_KEY;
 const ApiCategories = "genre/movie/list";
 
 export class MoviesServices {
+  static async fetchMoviesReleases(page) {
+    return await httpClient.get(
+      `/movie/now_playing?api_key=${ApiKey}&language=pt-BR&page=${page}&region=BR`
+    );
+  }
   static async fetchMoviesTopRated(page) {
     return await httpClient.get(
       `/movie/top_rated?api_key=${ApiKey}&language=pt-BR&page=${page}&region=BR`
@@ -13,11 +18,7 @@ export class MoviesServices {
       `/movie/popular?api_key=${ApiKey}&language=pt-BR&page=${page}`
     );
   }
-  static async fetchMoviesReleases(page) {
-    return await httpClient.get(
-      `/movie/now_playing?api_key=${ApiKey}&language=pt-BR&page=${page}`
-    );
-  }
+
   static async fetchMoviesById(movieId) {
     return await httpClient.get(
       `/movie/${movieId}?api_key=${ApiKey}&append_to_response=credits,videos,images&language=pt-BR&region=BR`

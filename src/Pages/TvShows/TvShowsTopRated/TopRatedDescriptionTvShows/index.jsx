@@ -1,22 +1,22 @@
-import { useParams } from "react-router-dom";
 import ShowDescriptionFromMovieOrTvShows from "../../../components/ShowDescriptionFromMovieOrTvShows";
-
+import { useParams } from "react-router-dom";
 import useFetchTvShowsById from "../../../../hooks/useFetchTvShowsById";
 
-const TvShowsDescription = () => {
-  const { tvShowId } = useParams();
-  const { data: tvShow, isLoading, isError } = useFetchTvShowsById(tvShowId);
+const TopRatedDescriptionTvShows = () => {
+  const { id } = useParams();
+
+  const { data: tvShow, isLoading, isError } = useFetchTvShowsById(id);
 
   return (
-    <div className="">
+    <div>
       <ShowDescriptionFromMovieOrTvShows
         item={tvShow}
-        backLink="/searchForMoviesOrSeries"
         isLoading={isLoading}
         isError={isError}
+        backLink="/tvShows/topRatedCategory"
       />
     </div>
   );
 };
 
-export default TvShowsDescription;
+export default TopRatedDescriptionTvShows;
