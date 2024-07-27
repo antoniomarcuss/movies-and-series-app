@@ -11,7 +11,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { useFavoritesStore } from "../../../stores/useFavoritesStore";
-import { useEffect } from "react";
+import { useThemeControllerStore } from "../../../stores/ThemeControllerStore";
 
 const ShowDescriptionFromMovieOrTvShows = ({
   item,
@@ -25,6 +25,7 @@ const ShowDescriptionFromMovieOrTvShows = ({
     .slice(1, 3)
     .map((item) => item.name);
 
+  const isSun = useThemeControllerStore(({ isSun }) => isSun);
   const { movieId, tvShowId } = useParams();
 
   const { favorites, addFavorite, removeFavorite } = useFavoritesStore();
@@ -40,8 +41,14 @@ const ShowDescriptionFromMovieOrTvShows = ({
     }
   };
 
+  const textBlue950 = isSun && "text-blue-950 font-medium";
+
   return (
-    <div className="lg:max-w-[1600px] relative min-h-screen bg-gray-950 w-full m-auto">
+    <div
+      className={`lg:max-w-[1600px] relative min-h-screen bg-gray-950 w-full m-auto ${
+        isSun && "bg-white bg-opacity-100 "
+      }`}
+    >
       <Loading isLoading={isLoading} />
       <Error isError={isError} />
 
@@ -53,14 +60,18 @@ const ShowDescriptionFromMovieOrTvShows = ({
           >
             <IoCaretBackSharp className="absolute text-2xl top-5 left-5 text-white" />
           </Link>
-          <div className="w-full bg-red-200 h-60 sm:h-96 md:h-[400px] lg:md:h-80">
+          <div className="w-full h-60 sm:h-96 md:h-[400px] lg:md:h-80">
             <img
               className="w-full h-full object-cover"
               src={`${ApiImg}/${item?.data.backdrop_path}`}
               alt=""
             />
           </div>
-          <div className="relative sm:max-w-[80%] lg:max-w-[1400px] lg:w-[70%] m-auto bg-black p-2 bg-opacity-50 rounded-lg -top-10 sm:-top-36 ">
+          <div
+            className={`relative sm:max-w-[80%] lg:max-w-[1400px] lg:w-[70%] m-auto bg-black p-2 bg-opacity-50 rounded-lg -top-10 sm:-top-36 ${
+              isSun && "bg-white bg-opacity-10 shadow-md"
+            } `}
+          >
             <div className="flex items-center sm:p-3 lg:pl-[5vw] gap-2">
               <div className="w-48 sm:w-1/1 sm:p-1 max-w-52 sm:max-w-60 flex sm:items-center justify-between">
                 <img
@@ -70,20 +81,32 @@ const ShowDescriptionFromMovieOrTvShows = ({
                 />
               </div>
               <div className="flex flex-col sm:gap-2 lg:gap-4">
-                <h1 className="font-bold self-center text-white text-sm sm:text-xl lg:text-3xl">
+                <h1
+                  className={`font-bold self-center text-white text-sm sm:text-xl lg:text-3xl ${textBlue950}`}
+                >
                   {item?.data.title || item?.data.name}
                 </h1>
                 <div>
-                  <p className="border bg-black bg-opacity-60 border-yellow-300 px-2 p-1 w-fit text-xs text-yellow-300 sm:text-sm lg:text-lg">
+                  <p
+                    className={`border bg-black bg-opacity-60 border-yellow-300 px-2 p-1 w-fit text-xs text-yellow-300 sm:text-sm lg:text-lg ${
+                      isSun && " bg-blue-900 bg-opacity-100"
+                    }`}
+                  >
                     {genres?.join(" / ") || item?.data.genres[0]}
                   </p>
                 </div>
-                <div className="flex flex-col gap-1 sm:gap-3 mt-2 sm:mt-3">
+                <div className="flex  flex-col gap-1 sm:gap-3 mt-2 sm:mt-3">
                   <div className="flex flex-col sm:flex-row gap-1 sm:gap-4 sm:items-center text-yellow-300 text-xs">
-                    <p className="text-white text-xs sm:text-md lg:text-lg">
+                    <p
+                      className={`text-white text-xs sm:text-md lg:text-lg ${textBlue950}`}
+                    >
                       {item?.data.runtime ? item?.data.runtime + " MIN" : ""}
                     </p>
-                    <div className="flex sm:items-center sm:justify-center gap-2">
+                    <div
+                      className={`flex sm:items-center sm:justify-center gap-2 ${
+                        isSun && "font-medium  text-yellow-300"
+                      }`}
+                    >
                       <span className="sm:text-md lg:text-lg">
                         {item?.data.release_date || item?.data.first_air_date}
                       </span>
@@ -97,16 +120,22 @@ const ShowDescriptionFromMovieOrTvShows = ({
                     <p className="text-center text-yellow-300 sm:text-xl">
                       {item?.data.vote_average.toFixed(1)}
                     </p>
-                    <span className="bg-black text-yellow-300 border border-yellow-300 w-12 sm:w-20 h-6 sm:h-8 text-center text-sm sm:text-xl">
+                    <span
+                      className={`bg-black text-yellow-300 border border-yellow-300 w-12 sm:w-20 h-6 sm:h-8 text-center text-sm sm:text-xl ${
+                        isSun && "bg-blue-900"
+                      }`}
+                    >
                       IMDb
                     </span>
                   </div>
                   {item?.data?.budget ? (
                     <div className="flex flex-col sm:items-center sm:gap-3 sm:flex-row">
-                      <h1 className="text-white text-sm sm:text-md lg:text-lg">
+                      <h1
+                        className={`text-white text-sm sm:text-md lg:text-lg ${textBlue950}`}
+                      >
                         Orçamento:
                       </h1>
-                      <p className="text-yellow-300 text-xs lg:text-md lg:text-lg">
+                      <p className="text-yellow-300 font-medium text-xs lg:text-md lg:text-lg">
                         {new Intl.NumberFormat("pt-BR", {
                           currency: "BRL",
                           style: "currency",
@@ -117,10 +146,12 @@ const ShowDescriptionFromMovieOrTvShows = ({
                   <div className="flex flex-col sm:justify-between sm:gap-y-2">
                     {production?.length > 0 && (
                       <div className="flex flex-col sm:flex-row sm:items-center sm:gap-x-1">
-                        <h1 className="text-white text-sm md:text-md lg:text-lg">
+                        <h1
+                          className={`text-white text-sm md:text-md lg:text-lg ${textBlue950}`}
+                        >
                           Produção:
                         </h1>
-                        <p className="text-xs lg:text-lg text-yellow-300 sm:text-sm">
+                        <p className="text-xs lg:text-lg text-yellow-300 font-medium sm:text-sm">
                           {production?.join(" / ")}
                         </p>
                       </div>
@@ -139,15 +170,19 @@ const ShowDescriptionFromMovieOrTvShows = ({
             </div>
 
             <div className="p-2 flex flex-col items-center gap-1 lg:w-[700px] m-auto text-justify">
-              <h1 className="text-lg md:text-xl lg:text-2xl text-white tracking-widest">
+              <h1
+                className={`text-lg md:text-xl lg:text-2xl text-white tracking-widest ${textBlue950}`}
+              >
                 Sinopse
               </h1>
-              <p>{item?.data.overview}</p>
+              <p className={textBlue950}>{item?.data.overview}</p>
             </div>
 
             <div className="flex justify-center mt-3">
               <div className="w-full">
-                <h3 className="text-center text-lg md:text-2xl tracking-widest sm:text-xl my-4">
+                <h3
+                  className={`text-center text-lg md:text-2xl tracking-widest sm:text-xl my-4 ${textBlue950}`}
+                >
                   Elenco
                 </h3>
                 <Swiper
@@ -186,10 +221,12 @@ const ShowDescriptionFromMovieOrTvShows = ({
                           className="w-full rounded-md h-48 object-cover"
                           alt={cast.name}
                         />
-                        <div className="text-yellow-300 text-xs text-center mt-1">
+                        <div className="text-yellow-400 font-medium text-xs text-center mt-1">
                           {cast.character}
                         </div>
-                        <div className="text-xs text-center">{cast.name}</div>
+                        <div className={`text-xs text-center ${textBlue950}`}>
+                          {cast.name}
+                        </div>
                       </Link>
                     </SwiperSlide>
                   ))}
@@ -199,7 +236,9 @@ const ShowDescriptionFromMovieOrTvShows = ({
 
             {quantityOfVideos > 0 && (
               <div className="mt-6">
-                <h3 className="text-center text-lg md:text-2xl tracking-widest sm:text-xl my-4">
+                <h3
+                  className={`text-center text-lg md:text-2xl tracking-widest sm:text-xl my-4 ${textBlue950}`}
+                >
                   Trailers
                 </h3>
                 <Swiper

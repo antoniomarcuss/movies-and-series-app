@@ -15,6 +15,7 @@ import { IoStarSharp } from "react-icons/io5";
 import { useQuery } from "react-query";
 import { FiPlus } from "react-icons/fi";
 import { ApiImg } from "../../../../consts";
+import { useThemeControllerStore } from "../../../../stores/ThemeControllerStore";
 
 const MoviesCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
   const { data, isLoading, isError } = useQuery({
@@ -23,18 +24,28 @@ const MoviesCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+  const isSun = useThemeControllerStore(({ isSun }) => isSun);
 
   return (
     <div className="my-4 lg:my-0">
       <div className="flex items-center justify-between px-3 gap-2">
         <div className="flex items-center justify-center gap-2">
-          <p className="text-center text-lg lg:text-xl text-white my-2 lg:my-4">
+          <p
+            className={`text-center text-lg lg:text-2xl text-white my-2 lg:my-4  ${
+              isSun && "text-blue-950 font-medium"
+            } `}
+          >
             {title}
           </p>
           <IoStarSharp className="text-yellow-300 sm:text-xl" />
         </div>
+
         <Link to={`/${movieCategory}`}>
-          <FiPlus className="text-xl text-white md:text-2xl" />
+          <FiPlus
+            className={`text-xl text-white md:text-2xl ${
+              isSun && "text-blue-900"
+            }`}
+          />
         </Link>
       </div>
 
@@ -68,7 +79,7 @@ const MoviesCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
             navigation
           >
             {data?.data.results.map((movie) => (
-              <SwiperSlide key={movie.id} className="relative">
+              <SwiperSlide key={movie.id} className="relative ">
                 <Link to={`movie/${movie.id}`}>
                   <img
                     src={`${ApiImg}/${movie.poster_path}`}
@@ -78,7 +89,11 @@ const MoviesCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
                   <div className="text-yellow-300 absolute text-xs text-bold bg-black rounded-full bg-opacity-30 p-1 bottom-6">
                     {movie.vote_average.toFixed(1)}
                   </div>
-                  <p className="text-xs sm:text-sm tracking-tighter font-medium text-center mt-1 truncate max-w-[100px] sm:max-w-28 md:max-w-36 lg:max-w-40 lg:text-[16px] w-full">
+                  <p
+                    className={`text-xs sm:text-sm lg:text-md   tracking-tighter font-medium text-center mt-1 truncate ${
+                      isSun && "text-blue-950 "
+                    }`}
+                  >
                     {movie.title}
                   </p>
                 </Link>

@@ -15,6 +15,7 @@ import { IoStarSharp } from "react-icons/io5";
 import { useQuery } from "react-query";
 import { FiPlus } from "react-icons/fi";
 import { ApiImg } from "../../../../consts";
+import { useThemeControllerStore } from "../../../../stores/ThemeControllerStore";
 
 const TvShowsCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
   const { data, isLoading, isError } = useQuery({
@@ -24,17 +25,27 @@ const TvShowsCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
     refetchOnWindowFocus: false,
   });
 
+  const isSun = useThemeControllerStore(({ isSun }) => isSun);
+
   return (
     <div className="my-4 lg:my-0">
       <div className="flex items-center justify-between px-3 gap-2">
         <div className="flex items-center justify-center gap-2">
-          <p className="text-center text-lg lg:text-xl text-white my-2 lg:my-4">
+          <p
+            className={`text-center text-lg lg:text-2xl text-white my-2 lg:my-4  ${
+              isSun && "text-blue-950 font-medium"
+            } `}
+          >
             {title}
           </p>
           <IoStarSharp className="text-yellow-300 sm:text-xl" />
         </div>
         <Link to={`${movieCategory}`}>
-          <FiPlus className="text-xl text-white md:text-2xl" />
+          <FiPlus
+            className={`text-xl text-white md:text-2xl ${
+              isSun && "text-blue-900"
+            }`}
+          />
         </Link>
       </div>
 
@@ -73,13 +84,17 @@ const TvShowsCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
                   <img
                     src={`${ApiImg}/${tvShow.poster_path}`}
                     alt={tvShow.title}
-                    className="bg-blue-200 rounded-md w-full"
+                    className="bg-blue-200 rounded-md "
                   />
-                  <div className="text-yellow-300 absolute text-xs text-bold bg-black rounded-full bg-opacity-30 p-1 bottom-6">
+                  <div className="text-yellow-300 absolute text-xs text-bold bg-black rounded-full bg-opacity-30 p-1 bottom-6 ">
                     {tvShow.vote_average.toFixed(1)}
                   </div>
-                  <p className="text-xs sm:text-sm tracking-tighter font-medium text-center mt-1 truncate max-w-[100px] sm:max-w-28 md:max-w-36 lg:max-w-40 lg:text-[16px] w-full">
-                    {tvShow.title || tvShow.name}
+                  <p
+                    className={`text-xs sm:text-sm font-medium text-center  tracking-tighter truncate mt-1 ${
+                      isSun && "text-blue-950 "
+                    }`}
+                  >
+                    {tvShow.name}
                   </p>
                 </Link>
               </SwiperSlide>

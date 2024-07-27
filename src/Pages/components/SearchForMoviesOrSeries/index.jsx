@@ -11,14 +11,15 @@ import { throttle } from "../../../utils/throttle";
 import { TvShowsServices } from "../../../services/tvShows";
 
 import Search from "./components/Search";
+import { useThemeControllerStore } from "../../../stores/ThemeControllerStore";
 
 const SearchForMoviesOrSeries = () => {
-  // const [query, setQuery] = useState("");
   const [moviePage, setMoviePage] = useState(1);
   const [tvPage, setTvPage] = useState(1);
   const [activeTab, setActiveTab] = useState("movies");
   const [searchQuery, setSearchQuery] = useState("");
 
+  const isSun = useThemeControllerStore(({ isSun }) => isSun);
   const throttledSearch = useCallback(
     throttle((value) => setSearchQuery(value), 800),
     []
@@ -102,30 +103,47 @@ const SearchForMoviesOrSeries = () => {
     activeTab === "movies" ? movieData?.data?.results : tvData?.data?.results;
 
   return (
-    <div className="bg-black bg-opacity-70 min-h-screen m-auto ">
+    <div
+      className={`bg-black bg-opacity-70 min-h-screen m-auto ${
+        isSun && "bg-white bg-opacity-100"
+      } `}
+    >
       <div className="flex items-center justify-between py-2 px-5 lg:px-12">
         <Link to={`/`}>
-          <IoCaretBackSharp className="text-2xl top-5 left-5 text-white " />
+          <IoCaretBackSharp
+            className={`text-2xl top-5 left-5 text-white ${
+              isSun && "text-blue-900"
+            } `}
+          />
         </Link>
         <form className="flex items-center py-4 justify-center max-w-[70%] w-full">
           <input
             type="search"
             autoFocus
             placeholder="Buscar aqui..."
-            className="border border-gray-500 p-2 border-r-0 w-full outline-none px-2 rounded-l-md"
+            className={`border border-gray-500 p-2 border-r-0 w-full outline-none px-2 rounded-l-md ${
+              isSun &&
+              "bg-blue-950 border-0 text-white  placeholder:text-white "
+            }`}
             value={searchQuery}
             onChange={handleSearchValue}
           />
           <button
             type="button"
-            className="border border-gray-500 border-l-0 p-3 rounded-r-md"
+            className={`border border-gray-500 border-l-0 p-3 rounded-r-md ${
+              isSun && "border-gray-400 bg-blue-900 hover:bg-blue-700  "
+            }`}
             onClick={() => setSearchQuery(searchQuery)}
           >
-            <CiSearch className="text-white" />
+            <CiSearch className={`text-white `} />
           </button>
         </form>
       </div>
-      <div className="flex h-12  md:max-w-[1600px] md:w-[80%] m-auto bg-black bg-opacity-30 p-2 items-center justify-evenly gap-10 mt-4">
+      <div
+        className={`flex h-12  md:max-w-[1600px] md:w-[80%] m-auto bg-black bg-opacity-30 p-2 items-center justify-evenly gap-10 mt-4 ${
+          isSun && "bg-blue-950 bg-opacity-90"
+        }`}
+      >
         <button
           onClick={() => setActiveTab("movies")}
           className={`relative  max-w-40 sm:max-w-60 lg:max-w-80 w-full ${

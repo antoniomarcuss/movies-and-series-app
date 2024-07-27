@@ -7,6 +7,7 @@ import Error from "../../../components/Error";
 import { useEffect, useRef, useState } from "react";
 import Pagination from "../../../components/Pagination";
 import { ApiImg } from "../../../consts";
+import { useThemeControllerStore } from "../../../stores/ThemeControllerStore";
 
 const ShowCategory = ({
   queryKey,
@@ -17,6 +18,7 @@ const ShowCategory = ({
 }) => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const isSun = useThemeControllerStore(({ isSun }) => isSun);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: [queryKey, page],
@@ -62,13 +64,27 @@ const ShowCategory = ({
   return (
     <div
       ref={movieContainerRef}
-      className="bg-black bg-opacity-50 md:max-w-[1600px]  m-auto "
+      className={`bg-black bg-opacity-50 md:max-w-[1600px]  m-auto ${
+        isSun && "bg-white bg-opacity-100"
+      } `}
     >
-      <div className="flex items-center gap-2 p-3 sm:p-4 bg-black bg-opacity-10 sm:px-4">
+      <div
+        className={`flex items-center gap-2 p-3 sm:p-4 bg-black bg-opacity-10 sm:px-4 ${
+          isSun && "bg-blue-200 shadow-lg "
+        }`}
+      >
         <Link to={backLinkHome}>
-          <IoArrowBackOutline className="text-lg" />
+          <IoArrowBackOutline
+            className={`text-lg ${isSun && "text-blue-900"}`}
+          />
         </Link>
-        <h1 className="text-center text-lg sm:text-xl text-white">{title}</h1>
+        <h1
+          className={`text-center text-lg sm:text-xl text-white ${
+            isSun && "text-blue-900 font-medium"
+          }`}
+        >
+          {title}
+        </h1>
       </div>
       <Loading isLoading={isLoading} />
       <Error isError={isError} />
@@ -89,7 +105,11 @@ const ShowCategory = ({
                     }	 rounded-md object-cover  `}
                     alt=""
                   />
-                  <h1 className="truncate w-[100px]  mt-2 text-xs sm:w-32 md:w-36 lg:max-w-32  pb-2 racking-wider lg:text-[13px] ">
+                  <h1
+                    className={`truncate w-[100px]  mt-2 text-xs sm:w-32 md:w-36 lg:max-w-32  pb-2 racking-wider lg:text-[13px] text-center ${
+                      isSun && "text-blue-950 font-medium"
+                    } `}
+                  >
                     {item.title || item.name}
                   </h1>
                 </div>

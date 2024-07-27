@@ -6,6 +6,7 @@ import { ApiImgAutoResolution } from "../../consts";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { TvShowsServices } from "../../services/tvShows";
+import { useThemeControllerStore } from "../../stores/ThemeControllerStore";
 const TvShows = () => {
   const { data } = useQuery({
     queryKey: ["tvShowsReleases"],
@@ -14,6 +15,7 @@ const TvShows = () => {
     refetchOnWindowFocus: false,
   });
 
+  const isSun = useThemeControllerStore(({ isSun }) => isSun);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const totalImages = data?.data.results.slice(0, 10).length || 0;
 
@@ -49,7 +51,11 @@ const TvShows = () => {
                 src={`${ApiImgAutoResolution}/${tvShows.backdrop_path}`}
                 className="w-full  md:h-96 object-cover lg:h-[450px] "
               />
-              <h1 className="text-center mt-1 md:text-xl  w-full text-white font-bold md:w-[690px]">
+              <h1
+                className={`text-center mt-1 md:text-xl  w-full text-white font-bold md:w-[690px]  ${
+                  isSun && "text-blue-900"
+                } `}
+              >
                 {tvShows.name}
               </h1>
             </div>
@@ -61,8 +67,11 @@ const TvShows = () => {
         {data?.data.results.slice(0, 10).map((_, index) => (
           <div
             key={index}
-            className={`w-2  h-2 cursor-pointer rounded-full bg-white bg-opacity-20   ${
-              index === currentImageIndex && " bg-white bg-opacity-90  w-5"
+            className={`w-2  h-2 cursor-pointer rounded-full bg-white bg-opacity-20  ${
+              isSun && "bg-gray-600"
+            }  ${
+              index === currentImageIndex &&
+              `  bg-white bg-opacity-90  w-5 ${isSun && "bg-blue-700"}`
             }`}
             onClick={() => setCurrentImageIndex(index)}
           ></div>

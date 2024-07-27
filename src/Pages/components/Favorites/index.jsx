@@ -9,11 +9,13 @@ import Loading from "../../../components/Loading";
 import Error from "../../../components/Error";
 import { Link } from "react-router-dom";
 import { TvShowsServices } from "../../../services/tvShows";
+import { useThemeControllerStore } from "../../../stores/ThemeControllerStore";
 
 const Favorites = () => {
   const { favorites } = useFavoritesStore();
   const [moviesData, setMoviesData] = useState([]);
   const [tvShowsData, setTvShowsData] = useState([]);
+  const isSun = useThemeControllerStore(({ isSun }) => isSun);
 
   const { isLoading: isLoadingMovies, isError: isErrorMovies } = useQuery({
     queryKey: ["favoritesMovies", favorites],
@@ -49,25 +51,39 @@ const Favorites = () => {
   const favoritesItems = [...moviesData, ...tvShowsData];
 
   return (
-    <div className="bg-black bg-opacity-50 min-h-screen md:max-w-[1600px] m-auto p-3 sm:p-4">
-      <div className="flex items-center gap-2 bg-black bg-opacity-10 sm:px-4">
+    <div
+      className={`bg-black bg-opacity-50 min-h-screen md:max-w-[1600px] m-auto p-3 sm:p-4 ${
+        isSun && "bg-white bg-opacity-100"
+      }`}
+    >
+      <div
+        className={`flex items-center gap-2 bg-black bg-opacity-10    sm:px-4 ${
+          isSun && "bg-blue-200 "
+        }`}
+      >
         <Link to="/">
-          <IoArrowBackOutline className="text-lg" />
+          <IoArrowBackOutline
+            className={`text-lg ${isSun && "text-blue-900"}`}
+          />
         </Link>
         <div className="flex items-center gap-2">
-          <h1 className="text-lg">Favoritos</h1>
+          <h1 className={`text-lg ${isSun && "text-blue-900"}`}>Favoritos</h1>
           <FaHeart className="text-red-500 text-lg hover:text-red-600" />
         </div>
       </div>
       {favoritesItems.length === 0 && (
-        <div className="text-center flex items-center justify-center min-h-[70vh] sm:min-h-[90vh] text-white mt-4 tracking-widest">
+        <div
+          className={`text-center flex items-center justify-center min-h-[70vh] sm:min-h-[90vh] text-white mt-4 tracking-widest ${
+            isSun && "text-blue-950 font-medium"
+          }`}
+        >
           Nenhum item encontrado nos favoritos.
         </div>
       )}
       <Loading isLoading={isLoading} />
       <Error isError={isError} />
       {!isLoading && !isError && (
-        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-2 mt-4">
+        <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-2 mt-4">
           {favoritesItems.map((item) => (
             <Link
               to={
@@ -79,7 +95,11 @@ const Favorites = () => {
               className="relative"
             >
               <img src={`${ApiImg}/${item.poster_path}`} alt="" />
-              <h1 className="self-center text-xs text-white truncate">
+              <h1
+                className={`self-center text-center mt-1 text-xs text-white truncate ${
+                  isSun && "text-blue-950 font-medium"
+                }`}
+              >
                 {item.title || item.name}
               </h1>
             </Link>
