@@ -42,7 +42,7 @@ const Routes = () => {
           <Route index element={<Movies />} />
           <Route path="tvShows" element={<TvShows />} />
         </Route>
-        <Route path="/genre/:genreName/:genreId/" element={<MoviesByGenre />} />
+        <Route path="/genre/:genreName/:genreId" element={<MoviesByGenre />} />
         <Route
           path="/tvShows/genre/:genreName/:genreId"
           element={<TvShowsByGenre />}

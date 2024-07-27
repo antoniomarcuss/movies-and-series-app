@@ -10,7 +10,7 @@ const TvShowsByGenre = () => {
         queryKey={["TvShowsByGenre", genreId]}
         queryFn={(page) => TvShowsServices.fetchTvShowsByGenre(genreId, page)}
         title={genreName}
-        backLink={`/tvShows/genre/${genreName}/${genreId}/DescriptionTvShowsByGenres`}
+        backLink={`tvShows/genre/${genreName}/${genreId}/DescriptionTvShowsByGenres`}
         backLinkHome={"/tvShows"}
       />
     </div>

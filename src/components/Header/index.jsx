@@ -34,7 +34,7 @@ const Header = () => {
       return genresTvShows.map((genre) => (
         <li key={genre.id}>
           <Link
-            to={`/tvShows/genre/${genre.name}/${genre.id}`}
+            to={`tvShows/genre/${genre.name}/${genre.id}`}
             className="text-lg"
           >
             {genre.name}
