@@ -6,7 +6,6 @@ import {
 } from "react-router-dom";
 
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import Movies from "../Pages/Movies";
 import ShowDescriptionCarouselMovies from "../Pages/Movies/ShowDescriptionCarouselMovies";
 import Layout from "../components/Layout";
@@ -31,6 +30,9 @@ import PopularCategoryTvShows from "../Pages/TvShows/TvShowsPopular/PopularCateg
 import PopularDescriptionTvShows from "../Pages/TvShows/TvShowsPopular/PopularDescriptionTvShows";
 import DescriptionTvShowsByGenres from "../Pages/TvShows/components/DescriptionTvShowsByGenres";
 import TvShowsByGenre from "../Pages/TvShows/components/TvShowsByGenre";
+import Favorites from "../Pages/components/Favorites";
+import FavoritesDescription from "../Pages/components/Favorites/FavoritesDescription";
+import PageNotFound from "../Pages/components/PageNotFound";
 
 const Routes = () => {
   const browserRouter = createBrowserRouter(
@@ -63,7 +65,7 @@ const Routes = () => {
         />
         <Route path="/releasesCategory" element={<ReleasesCategory />} />
         <Route
-          path="/releasesCategory/releaseDescription/:id"
+          path="/releasesCategory/releaseDescription/:movieId"
           element={<ReleaseDescription />}
         />
         <Route
@@ -71,7 +73,7 @@ const Routes = () => {
           element={<ReleasesCategoryTvShows />}
         />
         <Route
-          path="/tvShows/releasesCategory/releaseDescription/:id"
+          path="/tvShows/releasesCategory/releaseDescription/:tvShowId"
           element={<ReleaseDescriptionTvShows />}
         />
         /
@@ -81,11 +83,11 @@ const Routes = () => {
           element={<TopRatedCategoryTvShows />}
         />
         <Route
-          path="/topRatedCategory/topRatedDescription/:id"
+          path="/topRatedCategory/topRatedDescription/:movieId"
           element={<TopRatedDescription />}
         />
         <Route
-          path="/tvShows/topRatedCategory/topRatedDescription/:id"
+          path="/tvShows/topRatedCategory/topRatedDescription/:tvShowId"
           element={<TopRatedDescriptionTvShows />}
         />
         <Route path="/popularCategory" element={<PopularCategory />} />
@@ -94,11 +96,11 @@ const Routes = () => {
           element={<PopularCategoryTvShows />}
         />
         <Route
-          path="/popularCategory/popularDescription/:id"
+          path="/popularCategory/popularDescription/:movieId"
           element={<PopularDescription />}
         />
         <Route
-          path="tvShows/popularCategory/popularDescription/:id"
+          path="tvShows/popularCategory/popularDescription/:tvShowId"
           element={<PopularDescriptionTvShows />}
         />
         <Route path="searchForMoviesOrSeries">
@@ -112,7 +114,16 @@ const Routes = () => {
             element={<TvShowsDescription />}
           />
         </Route>
-        <Route path="*" element={null} />/
+        <Route path="/favorites" element={<Favorites />} />
+        <Route
+          path="/favorites/movie/:movieId"
+          element={<FavoritesDescription />}
+        />
+        <Route
+          path="/favorites/tvShow/:tvShowId"
+          element={<FavoritesDescription />}
+        />
+        <Route path="*" element={<PageNotFound />} />/
       </Route>
     )
   );
@@ -120,7 +131,6 @@ const Routes = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={browserRouter} />
-      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>
   );
 };

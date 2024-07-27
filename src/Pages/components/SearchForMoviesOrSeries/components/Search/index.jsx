@@ -5,10 +5,10 @@ import { ApiImg } from "../../../../../consts";
 const Search = ({ category, title }) => {
   return (
     <div className="md:max-w-[1600px] md:w-[90%]  m-auto">
-      <h1 className=" pl-4 text-lg md:text-xl text-white font-medium">
+      <h1 className="  text-lg md:text-xl text-center tracking-widest text-white font-medium">
         {title}
       </h1>
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 mx-2 mt-4 space-x-1 lg:space-4 gap-y-4 ">
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 mx-2 mt-4 space-x-1 lg:space-4 gap-y-4  ">
         {category.map((item) => (
           <Link
             to={`/searchForMoviesOrSeries/${

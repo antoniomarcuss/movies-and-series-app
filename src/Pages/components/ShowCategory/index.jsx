@@ -26,7 +26,6 @@ const ShowCategory = ({
     keepPreviousData: true,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      console.log(data.data.results);
       setTotalPages(data.data.total_pages);
     },
   });

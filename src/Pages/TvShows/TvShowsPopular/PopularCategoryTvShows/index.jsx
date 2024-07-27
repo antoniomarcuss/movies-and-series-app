@@ -7,7 +7,7 @@ const PopularCategoryTvShows = () => {
       <ShowCategory
         queryKey={["TvShowsPopular"]}
         queryFn={TvShowsServices.fetchPopularTvShows}
-        title="Popular"
+        title="Séries Populares"
         backLink={"/tvShows/popularCategory/popularDescription"}
         backLinkHome="/tvShows"
       />

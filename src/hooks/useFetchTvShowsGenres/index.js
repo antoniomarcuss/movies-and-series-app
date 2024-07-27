@@ -12,7 +12,6 @@ const useFetchTvShowsGenres = () => {
     refetchOnMount: false,
     onSuccess: (data) => {
       setGenresTvShows(data.data.genres);
-      // console.log(data.data.genres);
     },
   });
 

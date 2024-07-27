@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import useFetchMoviesById from "../../../../hooks/useFetchMoviesById";
 
 const ReleaseDescription = () => {
-  const { id } = useParams();
-  const { data: movie, isLoading, isError } = useFetchMoviesById(id);
+  const { movieId } = useParams();
+  const { data: movie, isLoading, isError } = useFetchMoviesById(movieId);
 
   return (
     <div>

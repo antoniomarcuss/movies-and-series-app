@@ -85,9 +85,9 @@ const Header = () => {
             <CiSearch className="text-white text-xl lg:text-2xl" />
           </button>
         </Link>
-        <button className="btn btn-ghost btn-circle">
+        <Link to={"/favorites"} className="btn btn-ghost btn-circle">
           <FaHeart className="text-red-500 text-lg hover:text-red-600" />
-        </button>
+        </Link>
       </div>
     </div>
   );

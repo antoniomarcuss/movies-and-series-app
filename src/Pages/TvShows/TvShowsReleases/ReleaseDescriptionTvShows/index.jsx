@@ -5,9 +5,8 @@ import { useParams } from "react-router-dom";
 import useFetchTvShowsById from "../../../../hooks/useFetchTvShowsById";
 
 const ReleaseDescriptionTvShows = () => {
-  const { id } = useParams();
-  console.log(id);
-  const { data: tvShow, isLoading, isError } = useFetchTvShowsById(id);
+  const { tvShowId } = useParams();
+  const { data: tvShow, isLoading, isError } = useFetchTvShowsById(tvShowId);
 
   return (
     <div>

@@ -1,13 +1,11 @@
-import { useQuery } from "react-query";
-import { MoviesServices } from "../../../../services/movies";
 import ShowDescriptionFromMovieOrTvShows from "../../../components/ShowDescriptionFromMovieOrTvShows";
 import { useParams } from "react-router-dom";
 import useFetchMoviesById from "../../../../hooks/useFetchMoviesById";
 
 const PopularDescription = () => {
-  const { id } = useParams();
+  const { movieId } = useParams();
 
-  const { data: movie, isLoading, isError } = useFetchMoviesById(id);
+  const { data: movie, isLoading, isError } = useFetchMoviesById(movieId);
 
   return (
     <div>

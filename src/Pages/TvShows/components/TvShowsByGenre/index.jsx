@@ -4,8 +4,6 @@ import { TvShowsServices } from "../../../../services/tvShows";
 
 const TvShowsByGenre = () => {
   const { genreName, genreId } = useParams();
-  console.log("genreId:", genreId);
-  console.log("genreName:", genreName);
   return (
     <div>
       <ShowCategory

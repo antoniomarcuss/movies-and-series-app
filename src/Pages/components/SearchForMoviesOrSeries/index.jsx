@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useQuery } from "react-query";
 import { MoviesServices } from "../../../services/movies";
@@ -13,7 +13,7 @@ import { TvShowsServices } from "../../../services/tvShows";
 import Search from "./components/Search";
 
 const SearchForMoviesOrSeries = () => {
-  const [query, setQuery] = useState("");
+  // const [query, setQuery] = useState("");
   const [moviePage, setMoviePage] = useState(1);
   const [tvPage, setTvPage] = useState(1);
   const [activeTab, setActiveTab] = useState("movies");
@@ -25,9 +25,22 @@ const SearchForMoviesOrSeries = () => {
   );
 
   const handleSearchValue = (e) => {
-    setQuery(e.target.value);
-    throttledSearch(e.target.value);
+    const { value } = e.target;
+    setSearchQuery(value);
+    throttledSearch(value);
+    if (value.trim()) {
+      localStorage.setItem("searchValue", value);
+      return;
+    }
+    localStorage.removeItem("searchValue");
   };
+
+  useEffect(() => {
+    const searchValue = localStorage.getItem("searchValue");
+    if (searchValue) {
+      setSearchQuery(searchValue);
+    }
+  }, []);
 
   const {
     data: movieData,
@@ -100,13 +113,13 @@ const SearchForMoviesOrSeries = () => {
             autoFocus
             placeholder="Buscar aqui..."
             className="border border-gray-500 p-2 border-r-0 w-full outline-none px-2 rounded-l-md"
-            value={query}
+            value={searchQuery}
             onChange={handleSearchValue}
           />
           <button
             type="button"
             className="border border-gray-500 border-l-0 p-3 rounded-r-md"
-            onClick={() => setSearchQuery(query)}
+            onClick={() => setSearchQuery(searchQuery)}
           >
             <CiSearch className="text-white" />
           </button>
@@ -157,7 +170,7 @@ const SearchForMoviesOrSeries = () => {
       {!isLoadingMovies && !isLoadingTv && activeCategory?.length > 0 && (
         <Search
           category={activeCategory}
-          title={activeTab === "movies" ? "Filmes" : "Series"}
+          title={activeTab === "movies" ? "Filmes" : "Séries"}
         />
       )}
 

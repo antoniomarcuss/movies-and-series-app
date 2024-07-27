@@ -31,7 +31,7 @@ export class TvShowsServices {
   }
   static async fetchTvShowsByGenre(genreId, page) {
     return await httpClient.get(
-      `/discover/tv?api_key=${ApiKey}&with_genres=${genreId}&language=pt-BR&page=${page}`
+      `/discover/movie?api_key=${ApiKey}&with_genres=${genreId}&language=pt-BR&page=${page}`
     );
   }
   static async SearchTvShows(query, page) {

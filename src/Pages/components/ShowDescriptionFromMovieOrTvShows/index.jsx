@@ -1,6 +1,6 @@
 import { PropTypes } from "prop-types";
 import { IoCaretBackSharp, IoStarSharp } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ApiImg } from "../../../consts";
 import { FaHeart } from "react-icons/fa";
 import Loading from "../../../components/Loading";
@@ -10,6 +10,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
+import { useFavoritesStore } from "../../../stores/useFavoritesStore";
+import { useEffect } from "react";
 
 const ShowDescriptionFromMovieOrTvShows = ({
   item,
@@ -23,10 +25,26 @@ const ShowDescriptionFromMovieOrTvShows = ({
     .slice(1, 3)
     .map((item) => item.name);
 
+  const { movieId, tvShowId } = useParams();
+
+  const { favorites, addFavorite, removeFavorite } = useFavoritesStore();
+  const isFavorite = favorites.some((fav) => fav.id === (movieId || tvShowId));
+
+  const handleToggleFavorite = () => {
+    const id = movieId || tvShowId;
+    const type = movieId ? "movie" : "tvShow";
+    if (isFavorite) {
+      removeFavorite(id);
+    } else {
+      addFavorite(id, type);
+    }
+  };
+
   return (
     <div className="lg:max-w-[1600px] relative min-h-screen bg-gray-950 w-full m-auto">
       <Loading isLoading={isLoading} />
       <Error isError={isError} />
+
       {!isLoading && !isError && (
         <>
           <Link
@@ -107,13 +125,19 @@ const ShowDescriptionFromMovieOrTvShows = ({
                         </p>
                       </div>
                     )}
-                    <Link className="mt-2">
-                      <FaHeart className="text-2xl text-sm:text-3xl" />
+                    <Link className="mt-2 ">
+                      <FaHeart
+                        onClick={handleToggleFavorite}
+                        className={`text-2xl text-sm:text-3xl ${
+                          isFavorite && "text-red-500"
+                        }`}
+                      />
                     </Link>
                   </div>
                 </div>
               </div>
             </div>
+
             <div className="p-2 flex flex-col items-center gap-1 lg:w-[700px] m-auto text-justify">
               <h1 className="text-lg md:text-xl lg:text-2xl text-white tracking-widest">
                 Sinopse
