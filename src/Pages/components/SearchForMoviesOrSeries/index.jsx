@@ -119,7 +119,7 @@ const SearchForMoviesOrSeries = () => {
             type="search"
             autoFocus
             placeholder="Buscar aqui..."
-            className={`border  p-2 border-r-0 w-full outline-none px-2 rounded-l-md ${
+            className={`border p-2 border-r-0 w-full outline-none px-2 rounded-l-md ${
               isSun
                 ? "bg-blue-950 border-0 text-white  placeholder:text-white "
                 : "border-gray-500"

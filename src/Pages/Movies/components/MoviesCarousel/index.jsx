@@ -87,7 +87,7 @@ const MoviesCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
                   </div>
                   <p
                     className={`text-xs sm:text-sm lg:text-md   tracking-tighter font-medium text-center mt-1 truncate ${
-                      isSun ? "text-blue-950 font-medium " : "text-white"
+                      isSun ? "text-blue-950 font-medium " : "text-gray-300"
                     }`}
                   >
                     {movie.title}

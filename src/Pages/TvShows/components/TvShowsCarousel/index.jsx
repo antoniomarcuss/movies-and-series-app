@@ -91,7 +91,7 @@ const TvShowsCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
                   </div>
                   <p
                     className={`text-xs sm:text-sm lg:text-md   tracking-tighter font-medium text-center  truncate pt-1 ${
-                      isSun ? "text-blue-950 font-medium " : "text-white "
+                      isSun ? "text-blue-950 font-medium " : "text-gray-300 "
                     }`}
                   >
                     {tvShow.name}

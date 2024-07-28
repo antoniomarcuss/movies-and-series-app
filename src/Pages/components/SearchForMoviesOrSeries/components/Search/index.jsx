@@ -30,7 +30,7 @@ const Search = ({ category, title }) => {
                       ? `${ApiImg}/${item.poster_path}`
                       : "./imageNotFound.jpg "
                   }`}
-                  className={` max-h-44  sm:min-h-56 h-full object-cover  rounded-md  ${
+                  className={` max-h-44  sm:min-h-56 object-cover  rounded-md  ${
                     !item.poster_path
                       ? " w-32 h-44 sm:w-40   lg:object-cover "
                       : "lg:object-contain"
