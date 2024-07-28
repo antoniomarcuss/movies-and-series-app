@@ -7,7 +7,7 @@ const Layout = () => {
   return (
     <div
       className={`bg-gray-950 relative  max-w-[1600px] w-full m-auto  pb-5 min-h-screen ${
-        isSun && "bg-white "
+        isSun && "bg-white bg-opacity-100 "
       }`}
     >
       <Header />

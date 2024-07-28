@@ -1,8 +1,4 @@
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-// import { Navigation } from "swiper";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -32,7 +28,7 @@ const MoviesCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
         <div className="flex items-center justify-center gap-2">
           <p
             className={`text-center text-lg lg:text-2xl text-white my-2 lg:my-4  ${
-              isSun && "text-blue-950 font-medium"
+              isSun && "text-blue-800 font-medium"
             } `}
           >
             {title}
@@ -43,7 +39,7 @@ const MoviesCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
         <Link to={`/${movieCategory}`}>
           <FiPlus
             className={`text-xl text-white md:text-2xl ${
-              isSun && "text-blue-900"
+              isSun && "text-blue-800"
             }`}
           />
         </Link>

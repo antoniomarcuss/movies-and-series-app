@@ -5,10 +5,10 @@ export default {
   theme: {
     extend: {},
   },
+  // eslint-disable-next-line no-undef
   plugins: [require("daisyui")],
   daisyui: {
-    themes: false,
-    darkTheme: "dark",
+    themes: [],
     base: true,
     styled: true,
     utils: true,
