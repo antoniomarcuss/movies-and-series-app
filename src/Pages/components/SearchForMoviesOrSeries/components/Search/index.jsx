@@ -14,7 +14,7 @@ const Search = ({ category, title }) => {
       >
         {title}
       </h1>
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 mx-2 mt-4 space-x-1 lg:space-4 gap-y-4  ">
+      <div className="grid grid-cols-3 sm:grid-cols-4  lg:grid-cols-6 mx-2 mt-4 space-x-1 lg:space-4 gap-y-4 justify-items-center  ">
         {category.map((item) => (
           <Link
             to={`/searchForMoviesOrSeries/${
@@ -23,20 +23,22 @@ const Search = ({ category, title }) => {
             key={item.id}
           >
             <div className="flex flex-col relative items-center">
-              <div className={`  w-full h-56   rounded-md`}>
+              <div>
                 <img
                   src={`${
                     item.poster_path
                       ? `${ApiImg}/${item.poster_path}`
                       : "./imageNotFound.jpg "
                   }`}
-                  className={` ${
-                    !item.poster_path && "w-32 object-cover lg:object-cover "
-                  }	 rounded-md h-48  sm:h-48   object-cover lg:object-contain `}
+                  className={` max-h-44  sm:min-h-56 h-full object-cover  rounded-md  ${
+                    !item.poster_path
+                      ? " w-32 h-44 sm:w-40   lg:object-cover "
+                      : "lg:object-contain"
+                  }`}
                   alt=""
                 />
                 <h1
-                  className={`truncate w-[100px]  mt-2 text-xs sm:w-32 md:w-36 lg:max-w-32  pb-2 racking-wider lg:text-[13px] text-center ${
+                  className={`truncate w-[100px]  mt-1 text-xs sm:w-32 md:w-36 lg:max-w-32  pb-2 racking-wider lg:text-[13px] text-center ${
                     isSun ? "text-blue-950 font-medium " : "text-gray-400"
                   } `}
                 >

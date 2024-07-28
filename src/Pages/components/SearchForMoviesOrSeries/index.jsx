@@ -121,7 +121,7 @@ const SearchForMoviesOrSeries = () => {
             placeholder="Buscar aqui..."
             className={`border  p-2 border-r-0 w-full outline-none px-2 rounded-l-md ${
               isSun
-                ? "bg-gray-500 border-0 text-white  placeholder:text-white "
+                ? "bg-blue-950 border-0 text-white  placeholder:text-white "
                 : "border-gray-500"
             }`}
             value={searchQuery}
@@ -142,7 +142,7 @@ const SearchForMoviesOrSeries = () => {
       </div>
       <div
         className={`flex h-12  md:max-w-[1600px] md:w-[90%] m-auto  p-2 items-center justify-evenly gap-10 mt-4 rounded-md ${
-          isSun ? "bg-blue-900 " : ""
+          isSun ? "bg-current " : ""
         }`}
       >
         <button
