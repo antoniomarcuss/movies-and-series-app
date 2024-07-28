@@ -7,7 +7,11 @@ const Search = ({ category, title }) => {
   const isSun = useThemeControllerStore(({ isSun }) => isSun);
   return (
     <div className="md:max-w-[1600px] md:w-[90%]  m-auto">
-      <h1 className="  text-lg md:text-xl text-center tracking-widest text-white font-medium">
+      <h1
+        className={`  text-lg md:text-xl text-center tracking-widest font-medium ${
+          isSun ? "font-medium text-blue-950" : "text-gray-400"
+        }`}
+      >
         {title}
       </h1>
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 mx-2 mt-4 space-x-1 lg:space-4 gap-y-4  ">
@@ -33,7 +37,7 @@ const Search = ({ category, title }) => {
                 />
                 <h1
                   className={`truncate w-[100px]  mt-2 text-xs sm:w-32 md:w-36 lg:max-w-32  pb-2 racking-wider lg:text-[13px] text-center ${
-                    isSun && "text-blue-950 "
+                    isSun ? "text-blue-950 font-medium " : "text-gray-400"
                   } `}
                 >
                   {item.title || item.name}

@@ -104,15 +104,13 @@ const SearchForMoviesOrSeries = () => {
 
   return (
     <div
-      className={`bg-black bg-opacity-70 min-h-screen m-auto ${
-        isSun && "bg-white bg-opacity-100"
-      } `}
+      className={` min-h-screen m-auto ${isSun ? "bg-white " : "bg-gray-950"} `}
     >
       <div className="flex items-center justify-between py-2 px-5 lg:px-12">
         <Link to={`/`}>
           <IoCaretBackSharp
-            className={`text-2xl top-5 left-5 text-white ${
-              isSun && "text-blue-900"
+            className={`text-2xl top-5 left-5  ${
+              isSun ? "text-blue-900" : "text-white"
             } `}
           />
         </Link>
@@ -121,17 +119,20 @@ const SearchForMoviesOrSeries = () => {
             type="search"
             autoFocus
             placeholder="Buscar aqui..."
-            className={`border border-gray-500 p-2 border-r-0 w-full outline-none px-2 rounded-l-md ${
-              isSun &&
-              "bg-blue-950 border-0 text-white  placeholder:text-white "
+            className={`border  p-2 border-r-0 w-full outline-none px-2 rounded-l-md ${
+              isSun
+                ? "bg-gray-500 border-0 text-white  placeholder:text-white "
+                : "border-gray-500"
             }`}
             value={searchQuery}
             onChange={handleSearchValue}
           />
           <button
             type="button"
-            className={`border border-gray-500 border-l-0 p-3 rounded-r-md ${
-              isSun && "border-gray-400 bg-blue-900 hover:bg-blue-700  "
+            className={`border  border-l-0 p-3 rounded-r-md ${
+              isSun
+                ? "border-gray-400 border-0 bg-black hover:bg-blue-950  "
+                : "border-gray-500"
             }`}
             onClick={() => setSearchQuery(searchQuery)}
           >
@@ -140,8 +141,8 @@ const SearchForMoviesOrSeries = () => {
         </form>
       </div>
       <div
-        className={`flex h-12  md:max-w-[1600px] md:w-[80%] m-auto bg-black bg-opacity-30 p-2 items-center justify-evenly gap-10 mt-4 ${
-          isSun && "bg-blue-950 bg-opacity-90"
+        className={`flex h-12  md:max-w-[1600px] md:w-[90%] m-auto  p-2 items-center justify-evenly gap-10 mt-4 rounded-md ${
+          isSun ? "bg-blue-900 " : ""
         }`}
       >
         <button

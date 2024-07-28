@@ -32,8 +32,8 @@ const TvShowsCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
       <div className="flex items-center justify-between px-3 gap-2">
         <div className="flex items-center justify-center gap-2">
           <p
-            className={`text-center text-lg lg:text-2xl text-white my-2 lg:my-4  ${
-              isSun && "text-blue-950 font-medium"
+            className={`text-center text-lg lg:text-2xl my-2 lg:my-4 ${
+              isSun ? "text-blue-950 font-medium" : "text-white"
             } `}
           >
             {title}
@@ -42,8 +42,8 @@ const TvShowsCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
         </div>
         <Link to={`${movieCategory}`}>
           <FiPlus
-            className={`text-xl text-white md:text-2xl ${
-              isSun && "text-blue-900"
+            className={`text-xl md:text-2xl ${
+              isSun ? "text-blue-900 " : "text-white"
             }`}
           />
         </Link>
@@ -90,8 +90,8 @@ const TvShowsCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
                     {tvShow.vote_average.toFixed(1)}
                   </div>
                   <p
-                    className={`text-xs sm:text-sm font-medium text-center  tracking-tighter truncate mt-1 ${
-                      isSun && "text-blue-950 "
+                    className={`text-xs sm:text-sm lg:text-md   tracking-tighter font-medium text-center  truncate pt-1 ${
+                      isSun ? "text-blue-950 font-medium " : "text-white "
                     }`}
                   >
                     {tvShow.name}

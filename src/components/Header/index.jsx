@@ -63,9 +63,11 @@ const Header = () => {
             <FaFilter />
           </div>
           <ul
-            tabIndex={0}
-            className={`menu menu-sm md:menu-md dropdown-content bg-gray-950 text-gray-400 rounded-box mt-3 w-52 p-2 shadow z-50 ${
-              isSun && "bg-gray-100  text-gray-600 font-medium"
+            tabIndex={4}
+            className={`menu menu-sm md:menu-md dropdown-content rounded-box mt-3 w-52 p-2 shadow z-50 ${
+              isSun
+                ? "bg-gray-100 text-blue-950 font-medium"
+                : "bg-gray-900 text-gray-300 "
             }`}
           >
             {renderGenres()}

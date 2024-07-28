@@ -3,12 +3,15 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 
   theme: {
-    extend: {},
+    extend: {
+      extend: {},
+    },
   },
   // eslint-disable-next-line no-undef
   plugins: [require("daisyui")],
   daisyui: {
-    themes: [],
+    themes: false,
+    darkTheme: false,
     base: true,
     styled: true,
     utils: true,

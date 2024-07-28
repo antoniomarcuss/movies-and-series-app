@@ -52,13 +52,13 @@ const Favorites = () => {
 
   return (
     <div
-      className={`bg-black bg-opacity-50 min-h-screen md:max-w-[1600px] m-auto p-3 sm:p-4 ${
-        isSun && "bg-white bg-opacity-100"
+      className={` min-h-screen md:max-w-[1600px] m-auto p-3 sm:p-4 ${
+        isSun ? "bg-white " : "bg-gray-950 "
       }`}
     >
       <div
-        className={`flex items-center gap-2 bg-black bg-opacity-10    sm:px-4 ${
-          isSun && "bg-blue-200 "
+        className={`flex items-center gap-2     sm:px-4 ${
+          isSun ? "text-blue-900 font-medium " : "text-white "
         }`}
       >
         <Link to="/">
@@ -73,8 +73,8 @@ const Favorites = () => {
       </div>
       {favoritesItems.length === 0 && (
         <div
-          className={`text-center flex items-center justify-center min-h-[70vh] sm:min-h-[90vh] text-white mt-4 tracking-widest ${
-            isSun && "text-blue-950 font-medium"
+          className={`text-center flex items-center justify-center min-h-[70vh] sm:min-h-[90vh]  mt-4 tracking-widest ${
+            isSun ? "text-blue-950 font-medium" : "text-white"
           }`}
         >
           Nenhum item encontrado nos favoritos.
@@ -94,10 +94,14 @@ const Favorites = () => {
               key={item.id}
               className="relative"
             >
-              <img src={`${ApiImg}/${item.poster_path}`} alt="" />
+              <img
+                className="rounded-md"
+                src={`${ApiImg}/${item.poster_path}`}
+                alt=""
+              />
               <h1
-                className={`self-center text-center mt-1 text-xs text-white truncate ${
-                  isSun && "text-blue-950 font-medium"
+                className={`self-center text-center mt-1 text-xs  truncate ${
+                  isSun ? "text-blue-950 font-medium" : "text-white"
                 }`}
               >
                 {item.title || item.name}

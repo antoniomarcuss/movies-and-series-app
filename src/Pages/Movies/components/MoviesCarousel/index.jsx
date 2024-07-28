@@ -27,8 +27,8 @@ const MoviesCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
       <div className="flex items-center justify-between px-3 gap-2">
         <div className="flex items-center justify-center gap-2">
           <p
-            className={`text-center text-lg lg:text-2xl text-white my-2 lg:my-4  ${
-              isSun && "text-blue-800 font-medium"
+            className={`text-center text-lg lg:text-2xl my-2 lg:my-4 ${
+              isSun ? "text-blue-950 font-medium" : "text-white"
             } `}
           >
             {title}
@@ -38,8 +38,8 @@ const MoviesCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
 
         <Link to={`/${movieCategory}`}>
           <FiPlus
-            className={`text-xl text-white md:text-2xl ${
-              isSun && "text-blue-800"
+            className={`text-xl md:text-2xl ${
+              isSun ? "text-blue-900 " : "text-white"
             }`}
           />
         </Link>
@@ -87,7 +87,7 @@ const MoviesCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
                   </div>
                   <p
                     className={`text-xs sm:text-sm lg:text-md   tracking-tighter font-medium text-center mt-1 truncate ${
-                      isSun && "text-blue-950 "
+                      isSun ? "text-blue-950 font-medium " : "text-white"
                     }`}
                   >
                     {movie.title}

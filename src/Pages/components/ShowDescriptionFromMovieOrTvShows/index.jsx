@@ -45,8 +45,8 @@ const ShowDescriptionFromMovieOrTvShows = ({
 
   return (
     <div
-      className={`lg:max-w-[1600px] relative min-h-screen bg-gray-950 w-full m-auto ${
-        isSun && "bg-white bg-opacity-100 "
+      className={`lg:max-w-[1600px] relative min-h-screen  w-full m-auto ${
+        isSun ? " bg-blue-200 bg-opacity-10 " : "bg-gray-950"
       }`}
     >
       <Loading isLoading={isLoading} />
@@ -68,8 +68,8 @@ const ShowDescriptionFromMovieOrTvShows = ({
             />
           </div>
           <div
-            className={`relative sm:max-w-[80%] lg:max-w-[1400px] lg:w-[70%] m-auto bg-black p-2 bg-opacity-50 rounded-lg -top-10 sm:-top-36 ${
-              isSun && "bg-white bg-opacity-10 shadow-md"
+            className={`relative sm:max-w-[80%] lg:max-w-[1400px] lg:w-[70%] m-auto p-2  rounded-lg -top-10 sm:-top-36 ${
+              isSun ? "bg-blue-950 bg-opacity-80 shadow-md" : " bg-black"
             } `}
           >
             <div className="flex items-center sm:p-3 lg:pl-[5vw] gap-2">
@@ -88,8 +88,10 @@ const ShowDescriptionFromMovieOrTvShows = ({
                 </h1>
                 <div>
                   <p
-                    className={`border bg-black bg-opacity-60 border-yellow-300 px-2 p-1 w-fit text-xs text-yellow-300 sm:text-sm lg:text-lg ${
-                      isSun && " bg-blue-900 bg-opacity-100"
+                    className={`border border-yellow-300 px-2 p-1 w-fit text-xs text-yellow-300 font-medium sm:text-sm lg:text-lg ${
+                      isSun
+                        ? " bg-blue-900 bg-opacity-100"
+                        : "bg-black bg-opacity-60 "
                     }`}
                   >
                     {genres?.join(" / ") || item?.data.genres[0]}
@@ -98,7 +100,7 @@ const ShowDescriptionFromMovieOrTvShows = ({
                 <div className="flex  flex-col gap-1 sm:gap-3 mt-2 sm:mt-3">
                   <div className="flex flex-col sm:flex-row gap-1 sm:gap-4 sm:items-center text-yellow-300 text-xs">
                     <p
-                      className={`text-white text-xs sm:text-md lg:text-lg ${textBlue950}`}
+                      className={`text-white text-xs sm:text-md lg:text-lg font-medium`}
                     >
                       {item?.data.runtime ? item?.data.runtime + " MIN" : ""}
                     </p>
@@ -171,17 +173,23 @@ const ShowDescriptionFromMovieOrTvShows = ({
 
             <div className="p-2 flex flex-col items-center gap-1 lg:w-[700px] m-auto text-justify">
               <h1
-                className={`text-lg md:text-xl lg:text-2xl text-white tracking-widest ${textBlue950}`}
+                className={`text-lg md:text-xl lg:text-2xl  tracking-widest ${
+                  isSun ? "text-white" : "text-gray-300"
+                } `}
               >
                 Sinopse
               </h1>
-              <p className={textBlue950}>{item?.data.overview}</p>
+              <p className={`${isSun ? "text-white" : "text-gray-300"}`}>
+                {item?.data.overview}
+              </p>
             </div>
 
             <div className="flex justify-center mt-3">
               <div className="w-full">
                 <h3
-                  className={`text-center text-lg md:text-2xl tracking-widest sm:text-xl my-4 ${textBlue950}`}
+                  className={`text-center text-lg md:text-2xl tracking-widest sm:text-xl my-4 ${
+                    isSun ? "text-white" : "text-gray-300"
+                  }`}
                 >
                   Elenco
                 </h3>
@@ -224,7 +232,11 @@ const ShowDescriptionFromMovieOrTvShows = ({
                         <div className="text-yellow-400 font-medium text-xs text-center mt-1">
                           {cast.character}
                         </div>
-                        <div className={`text-xs text-center ${textBlue950}`}>
+                        <div
+                          className={`text-xs text-center ${
+                            isSun ? "text-white" : "text-gray-300"
+                          }`}
+                        >
                           {cast.name}
                         </div>
                       </Link>
@@ -237,7 +249,9 @@ const ShowDescriptionFromMovieOrTvShows = ({
             {quantityOfVideos > 0 && (
               <div className="mt-6">
                 <h3
-                  className={`text-center text-lg md:text-2xl tracking-widest sm:text-xl my-4 ${textBlue950}`}
+                  className={`text-center text-lg md:text-2xl tracking-widest sm:text-xl my-4 ${
+                    isSun ? "text-white" : "text-gray-300"
+                  }`}
                 >
                   Trailers
                 </h3>

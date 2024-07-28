@@ -6,8 +6,8 @@ const Layout = () => {
   const isSun = useThemeControllerStore(({ isSun }) => isSun);
   return (
     <div
-      className={`bg-gray-950 relative  max-w-[1600px] w-full m-auto  pb-5 min-h-screen ${
-        isSun && "bg-white bg-opacity-100 "
+      className={` relative max-w-[1600px] w-full m-auto  pb-5 min-h-screen ${
+        isSun ? "bg-slate-50 " : "bg-gray-950"
       }`}
     >
       <Header />

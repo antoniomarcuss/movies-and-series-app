@@ -53,8 +53,8 @@ const Movies = () => {
                 className="w-full  md:h-96 object-cover lg:h-[450px] "
               />
               <h1
-                className={`text-center mt-1 md:text-xl  w-full text-white font-bold md:w-[690px]  ${
-                  isSun && "text-blue-900"
+                className={`text-center mt-1 md:text-xl  w-full font-bold md:w-[690px]  ${
+                  isSun ? "text-blue-900" : "text-white"
                 } `}
               >
                 {movie.title}
@@ -68,11 +68,10 @@ const Movies = () => {
         {data?.data.results.slice(0, 10).map((_, index) => (
           <div
             key={index}
-            className={`w-2  h-2 cursor-pointer rounded-full bg-white bg-opacity-20  ${
-              isSun && "bg-gray-600"
+            className={`w-2  h-2 cursor-pointer bg rounded-full bg-opacity-20   ${
+              isSun ? "bg-blue-900 " : "bg-white  "
             }  ${
-              index === currentImageIndex &&
-              `  bg-white bg-opacity-90  w-5 ${isSun && "bg-blue-700"}`
+              index === currentImageIndex && `  "bg-white bg-opacity-90   w-5 `
             }`}
             onClick={() => setCurrentImageIndex(index)}
           ></div>
