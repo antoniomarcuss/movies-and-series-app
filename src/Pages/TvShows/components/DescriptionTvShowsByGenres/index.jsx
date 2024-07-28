@@ -4,9 +4,9 @@ import ShowDescriptionFromMovieOrTvShows from "../../../components/ShowDescripti
 import useFetchTvShowsById from "../../../../hooks/useFetchTvShowsById";
 
 const DescriptionTvShowsByGenres = () => {
-  const { genreName, genreId, id } = useParams();
+  const { genreName, genreId, tvShowId } = useParams();
 
-  const { data: tvShows, isLoading, isError } = useFetchTvShowsById(id);
+  const { data: tvShows, isLoading, isError } = useFetchTvShowsById(tvShowId);
 
   return (
     <div>

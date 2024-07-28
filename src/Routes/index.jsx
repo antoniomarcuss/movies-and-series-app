@@ -48,11 +48,11 @@ const Routes = () => {
           element={<TvShowsByGenre />}
         />
         <Route
-          path="/genre/:genreName/:genreId/DescriptionMoviesByGenres/:id"
+          path="/genre/:genreName/:genreId/DescriptionMoviesByGenres/:movieId"
           element={<DescriptionMoviesByGenres />}
         />
         <Route
-          path="/tvShows/genre/:genreName/:genreId/DescriptionTvShowsByGenres/:id"
+          path="/tvShows/genre/:genreName/:genreId/DescriptionTvShowsByGenres/:tvShowId"
           element={<DescriptionTvShowsByGenres />}
         />
         <Route
