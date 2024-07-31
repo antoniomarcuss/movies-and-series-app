@@ -1,13 +1,11 @@
 import { PropTypes } from "prop-types";
-import { useQuery } from "react-query";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import Loading from "../../../components/Loading";
 import Error from "../../../components/Error";
-import { useEffect, useRef, useState } from "react";
 import Pagination from "../../../components/Pagination";
 import { ApiImg } from "../../../consts";
-import { useThemeControllerStore } from "../../../stores/ThemeControllerStore";
+import useShowCategoryViewModel from "./useShowCategoryViewModel";
 
 const ShowCategory = ({
   queryKey,
@@ -16,50 +14,17 @@ const ShowCategory = ({
   backLinkHome = "/",
   backLink,
 }) => {
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const isSun = useThemeControllerStore(({ isSun }) => isSun);
-
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [queryKey, page],
-    queryFn: () => queryFn(page),
-    staleTime: page === 1 ? 0 : 1000 * 60 * 5,
-    cacheTime: 1000 * 60 * 30,
-    keepPreviousData: true,
-    refetchOnWindowFocus: false,
-    onSuccess: (data) => {
-      setTotalPages(data.data.total_pages);
-    },
+  const {
+    results,
+    movieContainerRef,
+    isSun,
+    isLoading,
+    isError,
+    PaginationProps,
+  } = useShowCategoryViewModel({
+    queryKey,
+    queryFn,
   });
-  const movieContainerRef = useRef(null);
-
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setPage(newPage);
-    }
-  };
-
-  const scrollToTop = () => {
-    if (movieContainerRef.current && !isLoading && !isError) {
-      movieContainerRef.current.scrollIntoView({ behavior: "auto" });
-    }
-  };
-  useEffect(() => {
-    scrollToTop();
-  }, [page]);
-
-  const getVisiblePages = (currentPage, total) => {
-    const visiblePages = 4;
-    const startPage =
-      Math.floor((currentPage - 1) / visiblePages) * visiblePages + 1;
-    const endPage = Math.min(startPage + visiblePages - 1, total);
-    return Array.from(
-      { length: endPage - startPage + 1 },
-      (_, i) => startPage + i
-    );
-  };
-
-  const visiblePages = getVisiblePages(page, totalPages);
 
   return (
     <div
@@ -90,7 +55,7 @@ const ShowCategory = ({
       <Error isError={isError} />
       {!isLoading && !isError && (
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 mx-1 mt-4  space-x-1  gap-y-4 justify-items-center ">
-          {data?.data.results.map((item) => (
+          {results.map((item) => (
             <Link to={`${backLink}/${item.id}`} key={item.id}>
               <div className="flex flex-col relative  items-center">
                 <div>
@@ -123,14 +88,7 @@ const ShowCategory = ({
         </div>
       )}
 
-      {
-        <Pagination
-          handlePageChange={handlePageChange}
-          page={page}
-          totalPages={totalPages}
-          visiblePages={visiblePages}
-        />
-      }
+      {<Pagination {...PaginationProps} />}
     </div>
   );
 };

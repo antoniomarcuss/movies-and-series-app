@@ -1,106 +1,28 @@
-import { useState, useCallback, useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
-import { useQuery } from "react-query";
-import { MoviesServices } from "../../../services/movies";
 import Pagination from "../../../components/Pagination";
 import Loading from "../../../components/Loading";
 import Error from "../../../components/Error";
 import { Link } from "react-router-dom";
 import { IoCaretBackSharp } from "react-icons/io5";
-import { throttle } from "../../../utils/throttle";
-import { TvShowsServices } from "../../../services/tvShows";
 
 import Search from "./components/Search";
-import { useThemeControllerStore } from "../../../stores/ThemeControllerStore";
+import useSearchForMoviesOrSeriesViewModel from "./useSearchForMoviesOrSeriesViewModel";
 
 const SearchForMoviesOrSeries = () => {
-  const [moviePage, setMoviePage] = useState(1);
-  const [tvPage, setTvPage] = useState(1);
-  const [activeTab, setActiveTab] = useState("movies");
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const isSun = useThemeControllerStore(({ isSun }) => isSun);
-  const throttledSearch = useCallback(
-    throttle((value) => setSearchQuery(value), 800),
-    []
-  );
-
-  const handleSearchValue = (e) => {
-    const { value } = e.target;
-    setSearchQuery(value);
-    throttledSearch(value);
-    if (value.trim()) {
-      localStorage.setItem("searchValue", value);
-      return;
-    }
-    localStorage.removeItem("searchValue");
-  };
-
-  useEffect(() => {
-    const searchValue = localStorage.getItem("searchValue");
-    if (searchValue) {
-      setSearchQuery(searchValue);
-    }
-  }, []);
-
   const {
-    data: movieData,
-    isLoading: isLoadingMovies,
-    isError: isErrorMovies,
-  } = useQuery({
-    queryKey: ["searchMovies", searchQuery, moviePage],
-    queryFn: () => MoviesServices.SearchMovies(searchQuery, moviePage),
-    enabled: !!searchQuery,
-    staleTime: 1000 * 60 * 5, // 5 minutos
-    cacheTime: 1000 * 60 * 10, // 10 minutos
-    refetchOnMount: false,
-  });
-
-  const {
-    data: tvData,
-    isLoading: isLoadingTv,
-    isError: isErrorTv,
-  } = useQuery({
-    queryKey: ["searchTv", searchQuery, tvPage],
-    queryFn: () => TvShowsServices.SearchTvShows(searchQuery, tvPage),
-    enabled: !!searchQuery,
-    refetchOnMount: false,
-    staleTime: 1000 * 60 * 5, // 5 minutos
-    cacheTime: 1000 * 60 * 10, // 10 minutos
-  });
-
-  const handlePageChange = (newPage) => {
-    if (activeTab === "movies") {
-      setMoviePage(newPage);
-    } else {
-      setTvPage(newPage);
-    }
-  };
-
-  const getVisiblePages = (currentPage, total) => {
-    const visiblePages = 4;
-    const startPage =
-      Math.floor((currentPage - 1) / visiblePages) * visiblePages + 1;
-    const endPage = Math.min(startPage + visiblePages - 1, total);
-    return Array.from(
-      { length: endPage - startPage + 1 },
-      (_, i) => startPage + i
-    );
-  };
-
-  const visiblePages =
-    activeTab === "movies"
-      ? getVisiblePages(moviePage, movieData?.data?.total_pages || 0)
-      : getVisiblePages(tvPage, tvData?.data?.total_pages || 0);
-
-  const totalResults = (data) =>
-    data?.data?.total_results > 999 ? "999+" : data?.data?.total_results || 0;
-
-  const totalResultsTv = totalResults(tvData);
-  const totalResultsMovies = totalResults(movieData);
-
-  const activeCategory =
-    activeTab === "movies" ? movieData?.data?.results : tvData?.data?.results;
+    isSun,
+    searchQuery,
+    setSearchQuery,
+    handleSearchValue,
+    activeTab,
+    setActiveTab,
+    movieData,
+    totalResultsMovies,
+    totalResultsTv,
+    tvData,
+    activeCategory,
+    PaginationProps,
+  } = useSearchForMoviesOrSeriesViewModel();
 
   return (
     <div
@@ -184,27 +106,18 @@ const SearchForMoviesOrSeries = () => {
           />
         </button>
       </div>
-      <Loading isLoading={isLoadingMovies || isLoadingTv} />
-      <Error isError={isErrorMovies || isErrorTv} />
-      {!isLoadingMovies && !isLoadingTv && activeCategory?.length > 0 && (
-        <Search
-          category={activeCategory}
-          title={activeTab === "movies" ? "Filmes" : "Séries"}
-        />
-      )}
+      <Loading isLoading={movieData.isLoading || tvData.isLoading} />
+      <Error isError={movieData.isError || tvData.isError} />
+      {!movieData.isLoading &&
+        !tvData.isLoading &&
+        activeCategory?.length > 0 && (
+          <Search
+            category={activeCategory}
+            title={activeTab === "movies" ? "Filmes" : "Séries"}
+          />
+        )}
 
-      {(movieData || tvData) && (
-        <Pagination
-          handlePageChange={handlePageChange}
-          page={activeTab === "movies" ? moviePage : tvPage}
-          totalPages={
-            activeTab === "movies"
-              ? movieData?.data?.total_pages || 0
-              : tvData?.data?.total_pages || 0
-          }
-          visiblePages={visiblePages}
-        />
-      )}
+      {(movieData.data || tvData.data) && <Pagination {...PaginationProps} />}
     </div>
   );
 };

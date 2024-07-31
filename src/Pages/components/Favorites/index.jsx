@@ -1,54 +1,13 @@
-import { useState } from "react";
-import { useFavoritesStore } from "../../../stores/useFavoritesStore";
-import { useQuery } from "react-query";
-import { MoviesServices } from "../../../services/movies";
 import { ApiImg } from "../../../consts";
 import { FaHeart } from "react-icons/fa";
 import { IoArrowBackOutline } from "react-icons/io5";
 import Loading from "../../../components/Loading";
 import Error from "../../../components/Error";
 import { Link } from "react-router-dom";
-import { TvShowsServices } from "../../../services/tvShows";
-import { useThemeControllerStore } from "../../../stores/ThemeControllerStore";
+import useFavoritesViewModel from "./useFavoritesViewModel";
 
 const Favorites = () => {
-  const { favorites } = useFavoritesStore();
-  const [moviesData, setMoviesData] = useState([]);
-  const [tvShowsData, setTvShowsData] = useState([]);
-  const isSun = useThemeControllerStore(({ isSun }) => isSun);
-
-  const { isLoading: isLoadingMovies, isError: isErrorMovies } = useQuery({
-    queryKey: ["favoritesMovies", favorites],
-    queryFn: () =>
-      Promise.all(
-        favorites
-          .filter((fav) => fav.type === "movie")
-          .map((fav) => MoviesServices.fetchMoviesById(fav.id))
-      ),
-    enabled: favorites.some((fav) => fav.type === "movie"),
-    onSuccess: (data) => {
-      setMoviesData(data.map((response) => response.data));
-    },
-  });
-
-  const { isLoading: isLoadingTvShows, isError: isErrorTvShows } = useQuery({
-    queryKey: ["favoritesTvShows", favorites],
-    queryFn: () =>
-      Promise.all(
-        favorites
-          .filter((fav) => fav.type === "tvShow")
-          .map((fav) => TvShowsServices.fetchTvShowsById(fav.id))
-      ),
-    enabled: favorites.some((fav) => fav.type === "tvShow"),
-    onSuccess: (data) => {
-      setTvShowsData(data.map((response) => response.data));
-    },
-  });
-
-  const isLoading = isLoadingMovies || isLoadingTvShows;
-  const isError = isErrorMovies || isErrorTvShows;
-
-  const favoritesItems = [...moviesData, ...tvShowsData];
+  const { favoritesItems, isLoading, isError, isSun } = useFavoritesViewModel();
 
   return (
     <div

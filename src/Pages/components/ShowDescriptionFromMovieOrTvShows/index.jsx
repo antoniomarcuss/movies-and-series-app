@@ -1,6 +1,6 @@
 import { PropTypes } from "prop-types";
 import { IoCaretBackSharp, IoStarSharp } from "react-icons/io5";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ApiImg } from "../../../consts";
 import { FaHeart } from "react-icons/fa";
 import Loading from "../../../components/Loading";
@@ -10,8 +10,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
-import { useFavoritesStore } from "../../../stores/useFavoritesStore";
-import { useThemeControllerStore } from "../../../stores/ThemeControllerStore";
+import useShowDescriptionFromMovieOrTvShowsViewModel from "./useShowDescriptionFromMovieOrTvShowsViewModel";
 
 const ShowDescriptionFromMovieOrTvShows = ({
   item,
@@ -19,34 +18,21 @@ const ShowDescriptionFromMovieOrTvShows = ({
   isLoading,
   isError,
 }) => {
-  const quantityOfVideos = item?.data.videos.results.length;
-  const genres = item?.data.genres.map((item) => item.name);
-  const production = item?.data.production_companies
-    .slice(1, 3)
-    .map((item) => item.name);
-
-  const isSun = useThemeControllerStore(({ isSun }) => isSun);
-  const { movieId, tvShowId } = useParams();
-
-  const { favorites, addFavorite, removeFavorite } = useFavoritesStore();
-  const isFavorite = favorites.some((fav) => fav.id === (movieId || tvShowId));
-
-  const handleToggleFavorite = () => {
-    const id = movieId || tvShowId;
-    const type = movieId ? "movie" : "tvShow";
-    if (isFavorite) {
-      removeFavorite(id);
-    } else {
-      addFavorite(id, type);
-    }
-  };
-
-  const textBlue950 = isSun && "text-blue-950 font-medium";
+  const {
+    isSun,
+    genres,
+    production,
+    handleToggleFavorite,
+    isFavorite,
+    quantityOfVideos,
+  } = useShowDescriptionFromMovieOrTvShowsViewModel({
+    item,
+  });
 
   return (
     <div
       className={`lg:max-w-[1600px] relative min-h-screen  w-full m-auto ${
-        isSun ? " bg-blue-200 bg-opacity-10 " : "bg-gray-950"
+        isSun ? " bg-blue-200 bg-opacity-10" : "bg-gray-950"
       }`}
     >
       <Loading isLoading={isLoading} />
@@ -82,7 +68,7 @@ const ShowDescriptionFromMovieOrTvShows = ({
               </div>
               <div className="flex flex-col sm:gap-2 lg:gap-4">
                 <h1
-                  className={`font-bold self-center text-white text-sm sm:text-xl lg:text-3xl ${textBlue950}`}
+                  className={`font-bold self-center text-white text-sm sm:text-xl lg:text-3xl `}
                 >
                   {item?.data.title || item?.data.name}
                 </h1>
@@ -133,7 +119,7 @@ const ShowDescriptionFromMovieOrTvShows = ({
                   {item?.data?.budget ? (
                     <div className="flex flex-col sm:items-center sm:gap-3 sm:flex-row">
                       <h1
-                        className={`text-white text-sm sm:text-md lg:text-lg ${textBlue950}`}
+                        className={`text-white text-sm sm:text-md lg:text-lg font-medium `}
                       >
                         Orçamento:
                       </h1>
@@ -149,7 +135,7 @@ const ShowDescriptionFromMovieOrTvShows = ({
                     {production?.length > 0 && (
                       <div className="flex flex-col sm:flex-row sm:items-center sm:gap-x-1">
                         <h1
-                          className={`text-white text-sm md:text-md lg:text-lg ${textBlue950}`}
+                          className={`text-white text-sm md:text-md lg:text-lg font-medium`}
                         >
                           Produção:
                         </h1>
@@ -173,8 +159,8 @@ const ShowDescriptionFromMovieOrTvShows = ({
 
             <div className="p-2 flex flex-col items-center gap-1 lg:w-[700px] m-auto text-justify">
               <h1
-                className={`text-lg md:text-xl lg:text-2xl  tracking-widest ${
-                  isSun ? "text-white" : "text-gray-300"
+                className={`text-lg md:text-xl font-medium lg:text-2xl  tracking-widest ${
+                  isSun ? "text-white " : "text-gray-300"
                 } `}
               >
                 Sinopse
@@ -187,7 +173,7 @@ const ShowDescriptionFromMovieOrTvShows = ({
             <div className="flex justify-center mt-3">
               <div className="w-full">
                 <h3
-                  className={`text-center text-lg md:text-2xl tracking-widest sm:text-xl my-4 ${
+                  className={`text-center text-lg md:text-2xl tracking-widest sm:text-xl my-4 font-medium ${
                     isSun ? "text-white" : "text-gray-300"
                   }`}
                 >
@@ -249,7 +235,7 @@ const ShowDescriptionFromMovieOrTvShows = ({
             {quantityOfVideos > 0 && (
               <div className="mt-6">
                 <h3
-                  className={`text-center text-lg md:text-2xl tracking-widest sm:text-xl my-4 ${
+                  className={`text-center text-lg md:text-2xl tracking-widest sm:text-xl my-4 font-medium ${
                     isSun ? "text-white" : "text-gray-300"
                   }`}
                 >

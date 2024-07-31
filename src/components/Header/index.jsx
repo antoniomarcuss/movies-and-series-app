@@ -1,56 +1,16 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa";
-import useFetchMoviesGenres from "../../hooks/useFetchMoviesGenres";
-import useFetchTvShowsGenres from "../../hooks/useFetchTvShowsGenres";
-import { useThemeControllerStore } from "../../stores/ThemeControllerStore";
+import useHeaderViewModel from "./useHeaderViewModel";
 
 const Header = () => {
-  const { genres } = useFetchMoviesGenres();
-  const { genresTvShows } = useFetchTvShowsGenres();
-  const location = useLocation();
-
-  const { isSun, setIsSun } = useThemeControllerStore();
-
-  const ActivePage = [
-    {
-      page: "Filmes",
-      link: "/",
-    },
-    {
-      page: "Séries",
-      link: "/tvShows",
-    },
-  ];
-
-  const renderGenres = () => {
-    if (location.pathname === "/" && genres) {
-      return genres.map((genre) => (
-        <li key={genre.id}>
-          <Link to={`genre/${genre.name}/${genre.id}`} className={` text-lg `}>
-            {genre.name}
-          </Link>
-        </li>
-      ));
-    } else if (location.pathname === "/tvShows" && genresTvShows) {
-      return genresTvShows.map((genre) => (
-        <li key={genre.id}>
-          <Link
-            to={`tvShows/genre/${genre.name}/${genre.id}`}
-            className="text-lg"
-          >
-            {genre.name}
-          </Link>
-        </li>
-      ));
-    }
-    return null;
-  };
+  const { isSun, setIsSun, ActivePage, renderGenres } =
+    useHeaderViewModel(location);
 
   return (
     <div
-      className="navbar absolute bg-black bg-opacity-80 
+      className="navbar absolute  bg-black bg-opacity-50 z-50 
       "
     >
       <div className="navbar-start flex items-center gap-2 sm:gap-5 ">
@@ -58,7 +18,7 @@ const Header = () => {
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-ghost btn-circle text-gray-400 hover:text-white"
+            className="btn btn-ghost btn-circle text-gray-300 hover:text-white"
           >
             <FaFilter />
           </div>

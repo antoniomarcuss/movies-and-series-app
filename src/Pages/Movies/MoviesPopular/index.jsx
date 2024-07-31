@@ -1,6 +1,6 @@
 import { MoviesServices } from "../../../services/movies";
 import MoviesCarousel from "../components/MoviesCarousel";
-const MoviesReleases = () => {
+const MoviesPopular = () => {
   return (
     <div>
       <MoviesCarousel
@@ -13,4 +13,4 @@ const MoviesReleases = () => {
   );
 };
 
-export default MoviesReleases;
+export default MoviesPopular;
