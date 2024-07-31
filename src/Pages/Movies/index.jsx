@@ -1,4 +1,3 @@
-import { useQuery } from "react-query";
 import MoviesReleases from "./MoviesReleases";
 import MoviesTopRated from "./MoviesTopRated";
 import MoviesPopular from "./MoviesPopular";
