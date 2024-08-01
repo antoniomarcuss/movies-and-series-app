@@ -28,11 +28,11 @@ const TvShowsCarousel = ({ queryKey, queryFn, title, movieCategory }) => {
   const isSun = useThemeControllerStore(({ isSun }) => isSun);
 
   return (
-    <div className="my-4 lg:my-0">
-      <div className="flex items-center justify-between px-3 gap-2">
+    <div className="my-4 lg:my-0 lg:px-10">
+      <div className="flex items-center justify-between px-3 lg:px-0 gap-2">
         <div className="flex items-center justify-center gap-2">
           <p
-            className={`text-center text-lg lg:text-2xl my-2 lg:my-4 ${
+            className={`text-center text-lg lg:text-xl my-2 lg:my-4 ${
               isSun ? "text-blue-950 font-medium" : "text-white"
             } `}
           >
