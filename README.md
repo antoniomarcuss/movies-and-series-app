@@ -1,8 +1,1 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Desenvolvi esse projeto inspirado em outros apps de filmes e séries, mas com meu toque pessoal. Utilizei React para criar a interface do usuário e facilitar a reutilização de componentes, e Tailwind CSS para estilização e responsividade. O site é integrado com a API do TMDb, utilizando Axios para as requisições e React Query para gerenciar dados assíncronos, armazenando-os em cache e evitando requisições desnecessárias, o que melhora a performance e a experiência do usuário. Para o gerenciamento global do estado da aplicação, como o controlador de tema e os favoritos, utilizei Zustand com middleware para persistir os dados no localStorage. Usei o React Router DOM para gerenciar as rotas e navegação das páginas.
